@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background = "@drawable/background">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CONNECT 4"
+        android:fontFamily="@font/righteous_regular"
+        android:textColor="@color/YellowLight"
+        android:textSize="60sp"
+        android:background="@drawable/heading_back"
+        android:paddingHorizontal="20dp"
+        android:layout_marginBottom="50dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       android:text="start"
+        android:fontFamily="@font/shinshau"
+        android:textColor="@color/white2"
+        android:textSize="35sp"
+        android:layout_marginBottom="60dp"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        />
+    <Button
+        android:id="@+id/SPBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/baloo"
+        android:text="@string/SinglePlayer"
+        android:background="@drawable/selectedback"
+        android:textColor="@color/white2"
+        android:textSize="26sp"
+        android:padding="18dp"
+        />
+    <Button
+        android:id="@+id/TPBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/TwoPlayer"
+        android:fontFamily="@font/baloo"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/selectedback"
+        android:textColor="@color/white2"
+        android:textSize="26sp"
+        android:padding="18dp"/>
+
+</LinearLayout>

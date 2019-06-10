@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Connect Four</string>
+    <string name="SinglePlayer">Single Player</string>
+    <string name="TwoPlayer">Two Players</string>
+    <string name="player1">Player 1</string>
+    <string name="player2">Player 2</string>
+    <string name="undo">UNDO</string>
+
+</resources>

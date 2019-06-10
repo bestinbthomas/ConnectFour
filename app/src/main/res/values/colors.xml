@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FDD835</color>
+    <color name="colorPrimaryDark">#F9A825</color>
+    <color name="colorAccent">#FF1744</color>
+    <color name="playerColor">#0c0c0c</color>
+    <color name="BoxBlue">#1565C0</color>
+    <color name="BoxBlueDark">#283593</color>
+    <color name="greyDark">#99AAAAAA</color>
+    <color name="greyLight">#aaa</color>
+    <color name="YellowLight">#FDD835</color>
+    <color name="YellowDark">#99FDD835</color>
+    <color name="RedLight">#D50000</color>
+    <color name="RedDark">#99D50000</color>
+    <color name="GreenLight">#78E618</color>
+    <color name="GreenDark">#9978E618</color>
+    <color name="white1">#d0d0d0</color>
+    <color name="white2">#f0f0f0</color>
+    <color name="UndoBlue">#FF73A9FA</color>
+    <color name="FadedRect">#4DF57C00</color>
+
+
+</resources>

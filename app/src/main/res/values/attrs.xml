@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ViewBuilder">
+        <attr name="Rows" format="integer"/>
+        <attr name="Columns" format="integer"/>
+        <attr name="player_1_color" format="color"/>
+        <attr name="player_2_color" format="color"/>
+        <attr name="is_Single_player" format="boolean"/>
+    </declare-styleable>
+</resources>

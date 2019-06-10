@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".twoPlayerActivity"
+    android:background="@drawable/background">
+<com.example.connectfour.ViewBuilder
+    android:id="@+id/MyView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:Rows="7"
+    app:Columns="6"
+    app:player_1_color="@color/RedLight"
+    app:player_2_color="@color/YellowLight"
+    app:is_Single_player="false"
+    />
+    <TextView
+        android:id="@+id/Player1Tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/player1"
+        android:textSize="30sp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/lato_regular"
+        android:layout_alignParentLeft="true"
+        android:textColor="@color/playerColor"
+        android:background="@drawable/player1_back_r"
+        android:padding="15dp"/>
+    <TextView
+        android:id="@+id/Player2Tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/player2"
+        android:textSize="30sp"
+        android:fontFamily="@font/lato_regular"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/playerColor"
+        android:background="@drawable/player2_back_y"
+        android:padding="15dp"/>
+
+    <TextView
+        android:id="@+id/undoTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="54dp"
+        android:drawableTop="@drawable/undo"
+        android:fontFamily="@font/shinshau"
+        android:text="@string/undo"
+        android:textSize="20sp"
+        android:scaleY="1.5"
+        android:scaleX="1.5"
+        android:textColor="@color/UndoBlue"
+        android:background="@drawable/undo_back"
+        android:padding="10dp"/>
+
+
+</RelativeLayout>
