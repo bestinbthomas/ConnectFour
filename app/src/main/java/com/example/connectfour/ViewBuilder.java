@@ -28,7 +28,7 @@ import android.widget.Toast;
 
 public class ViewBuilder extends View  {
 
-    private Paint mRectPaint,mRectPaintDark,mDiskPaint,fadedrectPaint,mTextPaint;
+    private Paint mRectPaint,mRectPaintDark,mDiskPaint,fadedrectPaint,mTextPaint,winlinePaint;
     private Path holesPath;
     private Bitmap mBitmap;
     private Canvas SubCanvas;
@@ -59,6 +59,7 @@ public class ViewBuilder extends View  {
     private boolean isdropping;
     private boolean isSingle;
     private MediaPlayer dropsound;
+    private boolean isGameover;
 
     public ViewBuilder(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -97,6 +98,7 @@ public class ViewBuilder extends View  {
 
 
         dropsound = MediaPlayer.create(getContext(),R.raw.drop_music);
+        isGameover = false;
         dropsound.setLooping(false);
         play = new PlayGameTwo(rows,columns,isSingle);
         holesPath = new Path();
@@ -105,6 +107,10 @@ public class ViewBuilder extends View  {
         mDiskPaint = new Paint();
         mRectPaint.setAntiAlias(true);
         mTextPaint = new Paint();
+        winlinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        winlinePaint.setStrokeWidth(10);
+        winlinePaint.setStyle(Paint.Style.STROKE);
+        winlinePaint.setStrokeCap(Paint.Cap.ROUND);
         mTextPaint.setAntiAlias(true);
         mTextPaint.setColor(Color.WHITE);
         mTextPaint.setTextAlign(Paint.Align.CENTER);
@@ -208,6 +214,7 @@ public class ViewBuilder extends View  {
 
             }
         }
+        mTextPaint.setColor(Color.WHITE);
         if(isSingle){
             if (play.getIsPlayer1())
                 canvas.drawText("Your turn", width / 2, Mtop - (mTextPaint.getTextSize() + 20) * 2, mTextPaint);
@@ -227,6 +234,16 @@ public class ViewBuilder extends View  {
 
             canvas.drawBitmap(mBitmap, 0, 0, new Paint());
         }
+        if(isGameover){
+            Log.i(TAG, "onDraw: winline drawn");
+            winlinePaint.setColor(player1col);
+            if(play.getIsPlayer1())
+                winlinePaint.setColor(player2col);
+            mTextPaint.setColor(Color.BLACK);
+            canvas.drawText("Tap anywhere to Restart",width/2f,height/2f,mTextPaint);
+            canvas.drawLine(Cxs[play.x1][play.y1],Cys[play.x1][play.y1],Cxs[play.x2][play.y2],Cys[play.x2][play.y2],winlinePaint);
+            Log.i(TAG, "onDraw: value from play"+play.x1+play.x2+play.y1+play.y2);
+        }
         canvas.restore();
     }
 
@@ -234,7 +251,7 @@ public class ViewBuilder extends View  {
     public boolean onTouchEvent(MotionEvent event) {
 
 
-        if (event.getY() > (Mtop-Crad) && event.getY() < Mbottom && !isdropping) {
+        if (event.getY() > (Mtop-Crad) && event.getY() < Mbottom && !isdropping && !isGameover) {
             switch (event.getActionMasked()) {
                 case MotionEvent.ACTION_DOWN:
                     drawFadedRect(event.getX());
@@ -248,8 +265,14 @@ public class ViewBuilder extends View  {
                 default:
                     return false;
             }
+            return true;
         }
-        return true;
+        if(isGameover){
+            Activity act = (Activity)ctx;
+            act.recreate();
+            return true;
+        }
+        return false;
     }
 
     private void confirmDrop(float X) {
@@ -276,7 +299,6 @@ public class ViewBuilder extends View  {
         dropsound.release();
         AlertDialog alertDialog;
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getContext(),R.style.CustomDialog);
-        alertBuilder.setCancelable(false);
         if(isSingle)
             alertBuilder.setTitle(isWin?(play.getIsPlayer1()?"YOU    WON":"YOU   LOST"):"GAME  DRAWN");
         else
@@ -284,11 +306,8 @@ public class ViewBuilder extends View  {
         alertBuilder.setPositiveButton("PLAY AGAIN ", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                /*play = new PlayGameTwo(rows,columns);
-                mBitmap.eraseColor(Color.TRANSPARENT);*/
                 Activity activity = (Activity) ctx;
                 activity.recreate();
-                //invalidate();
             }
         });
         alertBuilder.setNegativeButton("EXIT", new DialogInterface.OnClickListener() {
@@ -302,6 +321,7 @@ public class ViewBuilder extends View  {
         alertDialog = alertBuilder.create();
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.show();
+        isGameover = true;
 
 
     }
@@ -366,6 +386,7 @@ public class ViewBuilder extends View  {
                     play.setstatus();
                     if(play.iswin()){
                         GameOver(true);
+                        invalidate();
                         return;
                     }
                     if(play.isdraw()){

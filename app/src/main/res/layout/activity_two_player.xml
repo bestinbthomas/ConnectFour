@@ -6,6 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".twoPlayerActivity"
     android:background="@drawable/background">
+    <TextView
+        android:id="@+id/undoTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="54dp"
+        android:drawableTop="@drawable/undo"
+        android:fontFamily="@font/shinshau"
+        android:text="@string/undo"
+        android:textSize="20sp"
+        android:scaleY="1.5"
+        android:scaleX="1.5"
+        android:textColor="@color/UndoBlue"
+        android:background="@drawable/undo_back"
+        android:padding="10dp"/>
 <com.example.connectfour.ViewBuilder
     android:id="@+id/MyView"
     android:layout_width="match_parent"
@@ -41,22 +57,7 @@
         android:background="@drawable/player2_back_y"
         android:padding="15dp"/>
 
-    <TextView
-        android:id="@+id/undoTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="54dp"
-        android:drawableTop="@drawable/undo"
-        android:fontFamily="@font/shinshau"
-        android:text="@string/undo"
-        android:textSize="20sp"
-        android:scaleY="1.5"
-        android:scaleX="1.5"
-        android:textColor="@color/UndoBlue"
-        android:background="@drawable/undo_back"
-        android:padding="10dp"/>
+
 
 
 </RelativeLayout>

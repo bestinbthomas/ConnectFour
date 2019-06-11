@@ -5,6 +5,7 @@ import android.util.Log;
 
 public class PlayGameTwo {
     private int columns,rows,y,x;
+    public int x1,x2,y1,y2;
     private int[][] status;
     private boolean isplayer1,isSingle;
     private ArtificialIntelligence myAI;
@@ -86,8 +87,13 @@ public class PlayGameTwo {
 
         int i = 0;
         while(status[x-i][y]==status[x][y]){
-            if(i==3)
+            if(i==3) {
+                x1 = x-i;
+                x2 = x;
+                y1 = y;
+                y2 = y;
                 return true;
+            }
             N++;
             i++;
             if(x-i < 0)
@@ -97,8 +103,13 @@ public class PlayGameTwo {
 
         i = 0;
         while(status[x+i][y]==status[x][y]){
-            if(i==3)
+            if(i==3) {
+                x1 = x;
+                x2 = x+i;
+                y1 = y;
+                y2 = y;
                 return true;
+            }
             S++;
             i++;
             if(x+i > columns-1)
@@ -108,8 +119,13 @@ public class PlayGameTwo {
 
         i = 0;
         while(status[x][y+i]==status[x][y]){
-            if(i==3)
+            if(i==3) {
+                x1 = x;
+                x2 = x;
+                y1 = y;
+                y2 = y+i;
                 return true;
+            }
             E++;
             i++;
             if(y+i > rows-1)
@@ -119,8 +135,13 @@ public class PlayGameTwo {
 
         i = 0;
         while(status[x][y-i]==status[x][y]){
-            if(i==3)
+            if(i==3) {
+                x1 = x;
+                x2 = x;
+                y1 = y-i;
+                y2 = y;
                 return true;
+            }
             W++;
             i++;
             if(y-i < 0)
@@ -130,8 +151,13 @@ public class PlayGameTwo {
 
         i = 0;
         while(status[x-i][y+i]==status[x][y]){
-            if(i==3)
+            if(i==3) {
+                x1 = x-i;
+                x2 = x;
+                y1 = y+i;
+                y2 = y;
                 return true;
+            }
             NE++;
             i++;
             if(x-i < 0 || y+i >rows-1)
@@ -141,8 +167,13 @@ public class PlayGameTwo {
 
         i = 0;
         while(status[x+i][y+i]==status[x][y]){
-            if(i==3)
+            if(i==3) {
+                x1 = x;
+                x2 = x+i;
+                y1 = y;
+                y2 = y+i;
                 return true;
+            }
             SE++;
             i++;
             if(x+i > columns-1 || y+i >rows-1)
@@ -152,8 +183,13 @@ public class PlayGameTwo {
 
         i = 0;
         while(status[x+i][y-i]==status[x][y]){
-            if(i==3)
+            if(i==3) {
+                x1 = x;
+                x2 = x+i;
+                y1 = y;
+                y2 = y-i;
                 return true;
+            }
             SW++;
             i++;
             if(x+i > columns-1 || y-i < 0)
@@ -163,14 +199,54 @@ public class PlayGameTwo {
 
         i = 0;
         while(status[x-i][y-i]==status[x][y]){
-            if(i==3)
+            if(i==3) {
+                x1 = x-i;
+                x2 = x;
+                y1 = y-i;
+                y2 = y;
                 return true;
+            }
             NW++;
             i++;
             if(x-i < 0 || y-i < 0)
                 break;
         }
-        return (((N + S) > 4) || ((E + W) > 4) || ((NE + SW) > 4) || ((NW + SE) > 4));
+        if(((N + S) > 4) || ((E + W) > 4) || ((NE + SW) > 4) || ((NW + SE) > 4)){
+            if((N + S) > 4){
+                x1 = x-(N-1);
+                x2 = x+(S-1);
+                y1 = y;
+                y2 = y;
+                Log.i(ViewBuilder.TAG, "n+s");
+            }
+            else if((E + W) > 4){
+                x1 = x;
+                x2 = x;
+                y1 = y+(E-1);
+                y2 = y-(W-1);
+                Log.i(ViewBuilder.TAG, "e+w");
+            }
+            else if((NE + SW) > 4){
+                x1 = x-(N-1);
+                x2 = x+(S-1);
+                y1 = y+(E-1);
+                y2 = y-(W-1);
+                Log.i(ViewBuilder.TAG, "ne+sw");
+            }
+            else if((NW + SE) > 4){
+                x1 = x-(N-1);
+                x2 = x+(S-1);
+                y1 = y-(W-1);
+                y2 = y+(E-1);
+                Log.i(ViewBuilder.TAG, "nw+se");
+            }
+            Log.d(ViewBuilder.TAG, "iswin() returned: " + true);
+            return true;
+        }
+        else {
+            Log.d(ViewBuilder.TAG, "iswin() returned: " + false);
+            return false;
+        }
     }
 
 

@@ -176,6 +176,15 @@
             android:padding="10dp"
             android:paddingHorizontal="26dp"/>
     </LinearLayout>
+    <TextView
+        android:id="@+id/SameColorWarning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="*Both players cannot select same color"
+        android:textColor="@color/RedLight"
+        android:textSize="16sp"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone"/>
 
 
 

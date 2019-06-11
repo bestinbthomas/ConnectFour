@@ -5,7 +5,10 @@ import android.support.annotation.Nullable;
 public class Result{
     public int Row;
     public int score;
-    Result(@Nullable int row,int scor){
+    Result(int scor){
+        score = scor;
+    }
+    Result(int row ,int scor){
         Row = row;
         score = scor;
     }

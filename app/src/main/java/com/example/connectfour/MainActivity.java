@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String PLAYER1COLOR = "Player1color";
     public static final String PLAYER2COLOR = "Player2color";
     private Button G1, G2, G3, p1c1, p1c2, p1c3, p2c1, p2c2, p2c3;
+    private TextView sameColorWarning;
     private View alertView;
     private MediaPlayer backPlayer;
 
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         p2c1 = alertView.findViewById(R.id.P2col1);
         p2c2 = alertView.findViewById(R.id.P2col2);
         p2c3 = alertView.findViewById(R.id.P2col3);
+        sameColorWarning = alertView.findViewById(R.id.SameColorWarning);
 
         SinglePlayer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,7 +125,10 @@ public class MainActivity extends AppCompatActivity {
                     p1c1.setBackgroundResource(R.drawable.selectedback);
                     p1c2.setBackgroundResource(R.drawable.undo_back);
                     p1c3.setBackgroundResource(R.drawable.undo_back);
+                    sameColorWarning.setVisibility(View.GONE);
                 }
+                else
+                    sameColorWarning.setVisibility(View.VISIBLE);
 
             }
         });
@@ -135,7 +140,10 @@ public class MainActivity extends AppCompatActivity {
                     p1c1.setBackgroundResource(R.drawable.undo_back);
                     p1c2.setBackgroundResource(R.drawable.selectedback);
                     p1c3.setBackgroundResource(R.drawable.undo_back);
+                    sameColorWarning.setVisibility(View.GONE);
                 }
+                else
+                    sameColorWarning.setVisibility(View.VISIBLE);
             }
         });
         p1c3.setOnClickListener(new View.OnClickListener() {
@@ -146,7 +154,10 @@ public class MainActivity extends AppCompatActivity {
                     p1c1.setBackgroundResource(R.drawable.undo_back);
                     p1c2.setBackgroundResource(R.drawable.undo_back);
                     p1c3.setBackgroundResource(R.drawable.selectedback);
+                    sameColorWarning.setVisibility(View.GONE);
                 }
+                else
+                    sameColorWarning.setVisibility(View.VISIBLE);
             }
         });
         p2c1.setOnClickListener(new View.OnClickListener() {
@@ -157,7 +168,10 @@ public class MainActivity extends AppCompatActivity {
                     p2c1.setBackgroundResource(R.drawable.selectedback);
                     p2c2.setBackgroundResource(R.drawable.undo_back);
                     p2c3.setBackgroundResource(R.drawable.undo_back);
+                    sameColorWarning.setVisibility(View.GONE);
                 }
+                else
+                    sameColorWarning.setVisibility(View.VISIBLE);
             }
         });
         p2c2.setOnClickListener(new View.OnClickListener() {
@@ -168,7 +182,10 @@ public class MainActivity extends AppCompatActivity {
                     p2c1.setBackgroundResource(R.drawable.undo_back);
                     p2c2.setBackgroundResource(R.drawable.selectedback);
                     p2c3.setBackgroundResource(R.drawable.undo_back);
+                    sameColorWarning.setVisibility(View.GONE);
                 }
+                else
+                    sameColorWarning.setVisibility(View.VISIBLE);
             }
         });
         p2c3.setOnClickListener(new View.OnClickListener() {
@@ -179,7 +196,10 @@ public class MainActivity extends AppCompatActivity {
                     p2c1.setBackgroundResource(R.drawable.undo_back);
                     p2c2.setBackgroundResource(R.drawable.undo_back);
                     p2c3.setBackgroundResource(R.drawable.selectedback);
+                    sameColorWarning.setVisibility(View.GONE);
                 }
+                else
+                    sameColorWarning.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -202,14 +222,18 @@ public class MainActivity extends AppCompatActivity {
         TextView P1Txt, P2Txt;
         P1Txt = alertView.findViewById(R.id.Player1colTxt);
         P2Txt = alertView.findViewById(R.id.Player2colTxt);
+        p1c = R.color.RedLight;
+        p2c = R.color.YellowLight;
+        col = 6;
+        row = 7;
 
         if (isSingle) {
-            P1Txt.setText("Your Color");
-            P2Txt.setText("AI Color");
+            P1Txt.setText("Your Color :");
+            P2Txt.setText("AI Color :");
         }
         else {
-            P1Txt.setText("Player 1 color");
-            P2Txt.setText("Player 2 color");
+            P1Txt.setText("Player 1 color :");
+            P2Txt.setText("Player 2 color :");
         }
 
         mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {

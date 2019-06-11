@@ -28,7 +28,7 @@ public class ArtificialIntelligence {
         int[][] board = copyBoard(brd);
         Result main;
 
-        main = minimax(board,5,Integer.MIN_VALUE,Integer.MAX_VALUE,true);
+        main = minimax(board,6,Integer.MIN_VALUE,Integer.MAX_VALUE,true);
 
         return main.Row;
     }
@@ -80,10 +80,10 @@ public class ArtificialIntelligence {
         }
         //check major diagonal
         for (int i = 3; i < columns; i++) {
-            for (int j = 3; j < rows; j++) {
+            for (int j = 0; j < rows-3; j++) {
                 if(brd[i][j]==0)continue;
                 for (int k = 0; k < 4; k++) {
-                    pack[k] = brd[i-k][j-k];
+                    pack[k] = brd[i-k][j+k];
                 }
                 if(countElement(pack,rep)==4)return true;
             }
@@ -115,7 +115,7 @@ public class ArtificialIntelligence {
         if(countElement(pack,HUMANREP)==4)
             return -1000000;
         else if(countElement(pack,AIREP)==4)
-            return 1000000;
+            return 1000000000;
         else if(countElement(pack,HUMANREP)==3 && countElement(pack,EMPTYREP)==1)
             return -4;
         else if(countElement(pack,AIREP)==3 && countElement(pack,EMPTYREP)==1)
@@ -135,7 +135,7 @@ public class ArtificialIntelligence {
             if(brd[i][rows/2]==AIREP)
                 score+=3;
             else if(brd[i][rows/2]==HUMANREP){
-                score-=3;
+                score-=2;
             }
         }
         //check horizontal
@@ -195,13 +195,13 @@ public class ArtificialIntelligence {
     private Result minimax(int[][] board, int depth, int alpha, int beta, boolean isAi) {
         if(depth == 0 || isGameOver(board)) {
             if(isWin(board,AIREP))
-                return new Result(-1,1000000000);
-            if(isWin(board,HUMANREP))
-                return new Result(-1,-10000);
-            if(getAvailRows(board).isEmpty())
-                return new Result(-1,0);
-            else
-                return new Result(-1,evaluateBoard(board));
+                return new Result(Integer.MAX_VALUE);
+            else if(isWin(board,HUMANREP))
+                return new Result(Integer.MIN_VALUE);
+            else if(getAvailRows(board).isEmpty())
+                return new Result(0);
+            else if(depth == 0)
+                return new Result(evaluateBoard(board));
         }
         if(isAi){
             int value = Integer.MIN_VALUE;
