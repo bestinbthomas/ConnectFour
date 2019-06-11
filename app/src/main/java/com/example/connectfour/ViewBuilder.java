@@ -14,6 +14,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Region;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.support.annotation.Nullable;
@@ -274,13 +275,13 @@ public class ViewBuilder extends View  {
     private void GameOver(boolean isWin) {
         dropsound.release();
         AlertDialog alertDialog;
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getContext());
-        alertBuilder.setTitle("Game Over !!!");
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getContext(),R.style.CustomDialog);
+        alertBuilder.setCancelable(false);
         if(isSingle)
-            alertBuilder.setMessage(isWin?(play.getIsPlayer1()?"Congratulations You won":"You lost"):"Game Drawn");
+            alertBuilder.setTitle(isWin?(play.getIsPlayer1()?"YOU    WON":"YOU   LOST"):"GAME  DRAWN");
         else
-            alertBuilder.setMessage(isWin?(play.getIsPlayer1()?"Player 1 won":"Player 2 won"):"Game Drawn");
-        alertBuilder.setPositiveButton("RESTART ", new DialogInterface.OnClickListener() {
+            alertBuilder.setTitle(isWin?(play.getIsPlayer1()?"PLAYER 1 WON":"PLAYER 2 WON"):"GAME  DRAWN");
+        alertBuilder.setPositiveButton("PLAY AGAIN ", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 /*play = new PlayGameTwo(rows,columns);
@@ -297,15 +298,9 @@ public class ViewBuilder extends View  {
                  activity.finish();
             }
         });
-        alertBuilder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                Activity activity = (Activity) ctx;
-                activity.recreate();
-            }
-        });
 
         alertDialog = alertBuilder.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.show();
 
 

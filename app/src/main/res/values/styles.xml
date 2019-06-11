@@ -13,8 +13,16 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="dialogCornerRadius">20dp</item>
+        <item name="colorAccent">@color/white2</item>
+    </style>
+
+    <style name="CustomDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:textColor">@color/white2</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:fontFamily">@font/baloo</item>
+        <item name="android:titleMarginBottom">50dp</item>
+        <item name="android:itemPadding">30dp</item>
     </style>
 
 

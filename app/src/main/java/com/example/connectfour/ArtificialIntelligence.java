@@ -117,7 +117,7 @@ public class ArtificialIntelligence {
         else if(countElement(pack,AIREP)==4)
             return 1000000;
         else if(countElement(pack,HUMANREP)==3 && countElement(pack,EMPTYREP)==1)
-            return -2;
+            return -4;
         else if(countElement(pack,AIREP)==3 && countElement(pack,EMPTYREP)==1)
             return 8;
 
@@ -133,9 +133,9 @@ public class ArtificialIntelligence {
         //scoring center Row
         for (int i = 0; i < columns; i++) {
             if(brd[i][rows/2]==AIREP)
-                score+=8;
+                score+=3;
             else if(brd[i][rows/2]==HUMANREP){
-                score-=8;
+                score-=3;
             }
         }
         //check horizontal
