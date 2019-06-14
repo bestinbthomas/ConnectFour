@@ -16,6 +16,7 @@ import android.graphics.Region;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -60,6 +61,8 @@ public class ViewBuilder extends View  {
     private boolean isSingle;
     private MediaPlayer dropsound;
     private boolean isGameover;
+    private boolean AIplaying;
+    private AI_Task ai_task;
 
     public ViewBuilder(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -95,6 +98,7 @@ public class ViewBuilder extends View  {
             ta.recycle();
 
         }
+
 
 
         dropsound = MediaPlayer.create(getContext(),R.raw.drop_music);
@@ -218,8 +222,8 @@ public class ViewBuilder extends View  {
         if(isSingle){
             if (play.getIsPlayer1())
                 canvas.drawText("Your turn", width / 2, Mtop - (mTextPaint.getTextSize() + 20) * 2, mTextPaint);
-            else
-                canvas.drawText("AI Playing", width / 2, Mtop - (mTextPaint.getTextSize() + 20) * 2, mTextPaint);
+            else if(!play.getIsPlayer1() || AIplaying)
+                canvas.drawText("Opponent Playing", width / 2, Mtop - (mTextPaint.getTextSize() + 20) * 2, mTextPaint);
             canvas.drawText("Tap on the grid to drop your disk ", width / 2, Mtop - mTextPaint.getTextSize() - 16, mTextPaint);
         }
         else
@@ -251,7 +255,7 @@ public class ViewBuilder extends View  {
     public boolean onTouchEvent(MotionEvent event) {
 
 
-        if (event.getY() > (Mtop-Crad) && event.getY() < Mbottom && !isdropping && !isGameover) {
+        if (event.getY() > (Mtop-Crad) && event.getY() < Mbottom && !isdropping && !isGameover && !AIplaying) {
             switch (event.getActionMasked()) {
                 case MotionEvent.ACTION_DOWN:
                     drawFadedRect(event.getX());
@@ -395,8 +399,8 @@ public class ViewBuilder extends View  {
                     play.TogglePlayer();
                     status = play.getStatus();
                     if(isSingle && !play.getIsPlayer1()) {
-                        play.AutoPlay();
-                        DropDisc(play.getX(),play.getY());
+                        ai_task = new AI_Task();
+                        ai_task.execute();
                     }
                 }
                 invalidate();
@@ -425,5 +429,26 @@ public class ViewBuilder extends View  {
 
     public void giveContext(Context context) {
         ctx = context;
+    }
+
+    public class AI_Task extends AsyncTask<String,String,String>{
+        @Override
+        protected void onPreExecute() {
+            AIplaying = true;
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            AIplaying = false;
+            DropDisc(play.getX(),play.getY());
+            super.onPostExecute(s);
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            play.AutoPlay();
+            return null;
+        }
     }
 }

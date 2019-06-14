@@ -37,7 +37,7 @@
         android:id="@+id/Player2Tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="AI"
+        android:text="Opponent"
         android:fontFamily="@font/lato_regular"
         android:textSize="30sp"
         android:layout_marginTop="20dp"

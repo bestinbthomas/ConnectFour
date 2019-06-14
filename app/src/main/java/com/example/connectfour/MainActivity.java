@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (isSingle) {
             P1Txt.setText("Your Color :");
-            P2Txt.setText("AI Color :");
+            P2Txt.setText("Opponent Color :");
         }
         else {
             P1Txt.setText("Player 1 color :");

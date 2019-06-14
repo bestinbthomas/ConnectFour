@@ -28,7 +28,7 @@ public class ArtificialIntelligence {
         int[][] board = copyBoard(brd);
         Result main;
 
-        main = minimax(board,6,Integer.MIN_VALUE,Integer.MAX_VALUE,true);
+        main = minimax(board,5,Integer.MIN_VALUE,Integer.MAX_VALUE,true);
 
         return main.Row;
     }
