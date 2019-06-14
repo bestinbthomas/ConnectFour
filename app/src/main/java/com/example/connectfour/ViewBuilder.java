@@ -63,6 +63,8 @@ public class ViewBuilder extends View  {
     private boolean isGameover;
     private boolean AIplaying;
     private AI_Task ai_task;
+    private Bitmap diskBitmap;
+    private Canvas diskcanvas;
 
     public ViewBuilder(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -149,8 +151,22 @@ public class ViewBuilder extends View  {
         width = MeasureSpec.getSize(widthMeasureSpec);
         height = MeasureSpec.getSize(heightMeasureSpec);
 
+        cx = Mleft + padding + Crad;
+        cy = Mtop + padding + Crad;
+        for (i = 0; i < columns; i++) {
+            for (j = 0; j < rows; j++) {
+                holesPath.addCircle(cx, cy, Crad, Path.Direction.CW);
+                Cxs[i][j] = cx;
+                Cys[i][j] = cy;
+                cx += padding + (2 * Crad);
+            }
+            cx = Mleft + padding + Crad;
+            cy += padding + (2 * Crad);
+        }
         mBitmap = Bitmap.createBitmap(width, height,Bitmap.Config.ARGB_8888);
+        diskBitmap = Bitmap.createBitmap(width,height, Bitmap.Config.ARGB_8888);
         SubCanvas = new Canvas(mBitmap);
+        diskcanvas = new Canvas(diskBitmap);
         padding = (width/rows)*0.15f;
         Crad = (((width-(3*padding))/rows)-padding)/2;
         Mrx = padding;
@@ -170,18 +186,7 @@ public class ViewBuilder extends View  {
 
 
         canvas.save();
-        cx = Mleft + padding + Crad;
-        cy = Mtop + padding + Crad;
-        for (i = 0; i < columns; i++) {
-            for (j = 0; j < rows; j++) {
-                holesPath.addCircle(cx, cy, Crad, Path.Direction.CW);
-                Cxs[i][j] = cx;
-                Cys[i][j] = cy;
-                cx += padding + (2 * Crad);
-            }
-            cx = Mleft + padding + Crad;
-            cy += padding + (2 * Crad);
-        }
+
         if (isdropping)
             canvas.drawBitmap(mBitmap, 0, 0, new Paint());
         canvas.save();
@@ -194,7 +199,7 @@ public class ViewBuilder extends View  {
         canvas.drawRoundRect(Mleft, Mtop, Mright + 8, Mbottom + 8, Mrx, Mry, mRectPaintDark);
         canvas.drawRoundRect(Mleft, Mtop, Mright, Mbottom, Mrx, Mry, mRectPaint);
         cy = Mtop + padding + Crad;
-        for (i = 0; i < columns; i++) {
+      /*  for (i = 0; i < columns; i++) {
             for (j = 0; j < rows; j++) {
                 mRectPaintDark.setColor(Color.WHITE);
                 canvas.drawCircle(cx + 2, cy + 2, Crad + 1, mRectPaintDark);
@@ -202,22 +207,11 @@ public class ViewBuilder extends View  {
             }
             cx = Mleft + padding + Crad;
             cy += padding + (2 * Crad);
-        }
+        }*/
         cy = Mtop + padding + Crad;
         canvas.restore();
 
-        for (i = 0; i < columns; i++) {
-            for (j = 0; j < rows; j++) {
-                if (status[i][j] == 1) {
-                    mDiskPaint.setColor(player1col);
-                    canvas.drawCircle(Cxs[i][j], Cys[i][j], Crad, mDiskPaint);
-                } else if (status[i][j] == 2) {
-                    mDiskPaint.setColor(player2col);
-                    canvas.drawCircle(Cxs[i][j], Cys[i][j], Crad, mDiskPaint);
-                }
-
-            }
-        }
+        canvas.drawBitmap(diskBitmap,0,0,new Paint());
         mTextPaint.setColor(Color.WHITE);
         if(isSingle){
             if (play.getIsPlayer1())
@@ -385,6 +379,7 @@ public class ViewBuilder extends View  {
                 }
                 SubCanvas.drawCircle(Cxs[x_][y_],ani_y,Crad,mDiskPaint);
                 if(Cys[x_][y_]==ani_y) {
+                    drawDisk(x_,y_);
                     isdropping = false;
                     dropsound.release();
                     play.setstatus();
@@ -423,12 +418,38 @@ public class ViewBuilder extends View  {
         play.undo();
         play.TogglePlayer();
         mBitmap.eraseColor(Color.TRANSPARENT);
+        redrawDisk();
         invalidate();
     }
 
 
     public void giveContext(Context context) {
         ctx = context;
+    }
+
+    private void drawDisk(int xd, int yd){
+        Log.d(TAG, "drawDisk() called with: xd = [" + xd + "], yd = [" + yd + "]");
+        mDiskPaint.setColor(player2col);
+        if(play.getIsPlayer1())
+            mDiskPaint.setColor(player1col);
+        diskcanvas.drawCircle(Cxs[xd][yd],Cys[xd][yd],Crad,mDiskPaint);
+    }
+    private void redrawDisk(){
+        Log.d(TAG, "redrawDisk() called");
+        diskBitmap.eraseColor(Color.TRANSPARENT);
+        for (i = 0; i < columns; i++) {
+            for (j = 0; j < rows; j++) {
+                if (status[i][j] == 1) {
+                    mDiskPaint.setColor(player1col);
+                    diskcanvas.drawCircle(Cxs[i][j], Cys[i][j], Crad, mDiskPaint);
+                } else if (status[i][j] == 2) {
+                    mDiskPaint.setColor(player2col);
+                    diskcanvas.drawCircle(Cxs[i][j], Cys[i][j], Crad, mDiskPaint);
+                }
+
+            }
+        }
+
     }
 
     public class AI_Task extends AsyncTask<String,String,String>{

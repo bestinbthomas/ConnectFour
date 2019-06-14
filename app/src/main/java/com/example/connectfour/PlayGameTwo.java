@@ -227,18 +227,19 @@ public class PlayGameTwo {
                 Log.i(ViewBuilder.TAG, "e+w");
             }
             else if((NE + SW) > 4){
-                x1 = x-(N-1);
-                x2 = x+(S-1);
-                y1 = y+(E-1);
-                y2 = y-(W-1);
+                x1 = x-(NE-1);
+                x2 = x+(SW-1);
+                y1 = y+(NE-1);
+                y2 = y-(SW-1);
                 Log.i(ViewBuilder.TAG, "ne+sw");
             }
             else if((NW + SE) > 4){
-                x1 = x-(N-1);
-                x2 = x+(S-1);
-                y1 = y-(W-1);
-                y2 = y+(E-1);
+                x1 = x-(NW-1);
+                x2 = x+(SE-1);
+                y1 = y-(NW-1);
+                y2 = y+(SE-1);
                 Log.i(ViewBuilder.TAG, "nw+se");
+                Log.i(ViewBuilder.TAG, "isWin: value set by play"+x1+x2+y1+y2);
             }
             Log.d(ViewBuilder.TAG, "iswin() returned: " + true);
             return true;
