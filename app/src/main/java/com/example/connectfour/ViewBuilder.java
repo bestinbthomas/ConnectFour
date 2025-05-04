@@ -1,5 +1,8 @@
 package com.example.connectfour;
 
+import static java.lang.Math.abs;
+
+import android.animation.Animator;
 import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
 import android.app.Activity;
@@ -18,7 +21,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
@@ -26,6 +28,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 public class ViewBuilder extends View  {
 
@@ -87,7 +91,7 @@ public class ViewBuilder extends View  {
     }
 
 
-    public void init (Context context, @Nullable AttributeSet set){
+    public void init (Context context, AttributeSet set){
 
         viewctx = context;
         if(set != null){
@@ -247,8 +251,6 @@ public class ViewBuilder extends View  {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-
-
         if (event.getY() > (Mtop-Crad) && event.getY() < Mbottom && !isdropping && !isGameover && !AIplaying) {
             switch (event.getActionMasked()) {
                 case MotionEvent.ACTION_DOWN:
@@ -378,7 +380,7 @@ public class ViewBuilder extends View  {
                     Log.i(TAG, "DropDisc: set color 2");
                 }
                 SubCanvas.drawCircle(Cxs[x_][y_],ani_y,Crad,mDiskPaint);
-                if(Cys[x_][y_]==ani_y) {
+                if(abs(Cys[x_][y_] - ani_y) < 0.01) {
                     drawDisk(x_,y_);
                     isdropping = false;
                     dropsound.release();
@@ -401,6 +403,28 @@ public class ViewBuilder extends View  {
                 invalidate();
             }
         });
+        animator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(@NonNull Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(@NonNull Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationCancel(@NonNull Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(@NonNull Animator animation) {
+
+            }
+        });
+
         animator.start();
         Log.i(TAG,"drop disc function draw circle at ("+x+","+y+")");
 

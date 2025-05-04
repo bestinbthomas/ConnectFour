@@ -1,6 +1,5 @@
 package com.example.connectfour;
 
-import android.support.annotation.Nullable;
 
 public class Result{
     public int Row;
