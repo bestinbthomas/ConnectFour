@@ -348,7 +348,6 @@ public class ViewBuilder extends View  {
     float ani_y;
     int x_,y_;
     public void DropDisc (int x, int y){
-
         x_ = x;
         y_ = y;
         isdropping = true;
@@ -380,26 +379,6 @@ public class ViewBuilder extends View  {
                     Log.i(TAG, "DropDisc: set color 2");
                 }
                 SubCanvas.drawCircle(Cxs[x_][y_],ani_y,Crad,mDiskPaint);
-                if(abs(Cys[x_][y_] - ani_y) < 0.01) {
-                    drawDisk(x_,y_);
-                    isdropping = false;
-                    dropsound.release();
-                    play.setstatus();
-                    if(play.iswin()){
-                        GameOver(true);
-                        invalidate();
-                        return;
-                    }
-                    if(play.isdraw()){
-                        GameOver(false);
-                    }
-                    play.TogglePlayer();
-                    status = play.getStatus();
-                    if(isSingle && !play.getIsPlayer1()) {
-                        ai_task = new AI_Task();
-                        ai_task.execute();
-                    }
-                }
                 invalidate();
             }
         });
@@ -411,7 +390,24 @@ public class ViewBuilder extends View  {
 
             @Override
             public void onAnimationEnd(@NonNull Animator animation) {
-
+                drawDisk(x_,y_);
+                isdropping = false;
+                dropsound.release();
+                play.setstatus();
+                if(play.iswin()){
+                    GameOver(true);
+                    invalidate();
+                    return;
+                }
+                if(play.isdraw()){
+                    GameOver(false);
+                }
+                play.TogglePlayer();
+                status = play.getStatus();
+                if(isSingle && !play.getIsPlayer1()) {
+                    ai_task = new AI_Task();
+                    ai_task.execute();
+                }
             }
 
             @Override
