@@ -1,7 +1,5 @@
 package com.example.connectfour;
 
-import static java.lang.Math.abs;
-
 import android.animation.Animator;
 import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
