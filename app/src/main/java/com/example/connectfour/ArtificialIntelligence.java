@@ -28,7 +28,7 @@ public class ArtificialIntelligence {
         int[][] board = copyBoard(brd);
         Result main;
 
-        main = minimax(board,5,Integer.MIN_VALUE,Integer.MAX_VALUE,true);
+        main = minimax(board,7,Integer.MIN_VALUE,Integer.MAX_VALUE,true);
 
         return main.Row;
     }
@@ -115,7 +115,7 @@ public class ArtificialIntelligence {
         if(countElement(pack,HUMANREP)==4)
             return -1000000;
         else if(countElement(pack,AIREP)==4)
-            return 1000000000;
+            return 1000000;
         else if(countElement(pack,HUMANREP)==3 && countElement(pack,EMPTYREP)==1)
             return -4;
         else if(countElement(pack,AIREP)==3 && countElement(pack,EMPTYREP)==1)
